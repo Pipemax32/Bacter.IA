@@ -4,14 +4,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { globalStyles } from "../styles/global";
 import Home from "../screens/home";
 import Cultivo from "../screens/cultivo";
+import Perfil from "../screens/perfil";
+import LoginForm from "../screens/loginForm";
 
 const { Navigator, Screen } = createStackNavigator();
 
 //headerMode="none"
 
-const HomeNavigator = () => (
+const Stack = () => (
   <Navigator
-    initialRouteName="Home"
+    initialRouteName="LoginForm"
     //Settings default para las pantallas
     screenOptions={{
       headerStyle: {
@@ -26,19 +28,24 @@ const HomeNavigator = () => (
     }}
   >
     {/* Esto abajo ya son las screens en sí ;-o */}
-    <Screen name="Mis Cultivos" component={Home} />
+    <Screen name="Bacter.IA" component={LoginForm} />
+    <Screen
+      name="Mis Cultivos"
+      component={Home}
+      options={{
+        headerLeft: null,
+      }}
+    />
     <Screen
       name="Cultivo"
       component={Cultivo}
-      options={({ route }) => ({
-        title: route.params.title,
-      })}
+      options={({ route }) => ({ title: route.params.titulo })}
     />
   </Navigator>
 );
 
 export const AppNavigator = () => (
   <NavigationContainer>
-    <HomeNavigator />
+    <Stack />
   </NavigationContainer>
 );
