@@ -3,14 +3,14 @@ import { StyleSheet, View, Button } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
-import PhotoComponent from "../components/PhotoComponent";
+import PhotoComponent from "./PhotoComponent";
 //import ButtonComponent from "../components/ButtonComponent";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
-class Main extends Component {
+class PhotoMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,4 +65,4 @@ class Main extends Component {
     );
   }
 }
-export default Main;
+export default PhotoMain;

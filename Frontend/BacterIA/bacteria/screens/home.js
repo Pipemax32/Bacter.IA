@@ -9,12 +9,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Button,
+  Alert,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import { MaterialIcons } from "@expo/vector-icons";
 import CultivoForm from "./cultivoForm";
 import Perfil from "./perfil";
 import Opciones from "./opciones";
+import Card from "../shared/card";
 
 export default function Home({ route, navigation }) {
   //const pressHandler = () => {
@@ -22,11 +24,14 @@ export default function Home({ route, navigation }) {
   //navigation.push("Cultivo");
   //};
 
-  const { nombre } = route.params;
+  //const { nombre } = route.params;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [cultivoformOpen, setCultivoformOpen] = useState(false);
-  //El Modal está prendido?????? idk
+
+  //kreeping track del key de cada bacteriplaca
+  const [keyCount, setKeyCount] = useState(0);
+  const keyCountUp = () => setKeyCount((prevKeyCount) => prevKeyCount + 1);
 
   const [cultivos, setCultivos] = useState([
     //Acá se pasan los cultivos prehechos, probablemente se pueda hacer que no haya pero hay que averiguar :-PP
@@ -35,7 +40,7 @@ export default function Home({ route, navigation }) {
       fecha: "1-2-2003",
       colonias: "23",
       notas: "lorem ipsum",
-      key: "1",
+      key: "0.1",
     },
     //La Key tiene que ser diferente entre todos los cultivos, averiguar forma de hacer que se agreguen siempre con Key nueva.
     {
@@ -43,19 +48,20 @@ export default function Home({ route, navigation }) {
       fecha: "1-2-2003",
       colonias: "99",
       notas: "lorem ipsum",
-      key: "2",
+      key: "0.2",
     },
     {
       titulo: "Bacterias 3",
       fecha: "1-2-2003",
       colonias: "23",
       notas: "lorem ipsum",
-      key: "3",
+      key: "0.3",
     },
   ]);
 
   const addCultivo = (cultivo) => {
-    cultivo.key = Math.random().toString();
+    keyCountUp();
+    cultivo.key = keyCount.toString(); //Math.random().toString(); jaja antes era rancio
     setCultivos((cultivosActuales) => {
       return [cultivo, ...cultivosActuales];
     });
@@ -64,73 +70,36 @@ export default function Home({ route, navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      {/* El Modal de creación se abre y ahí cargás los datos del cultivo nuevo a agregar */}
+      {/* El Modal de creación se abre y ahí cargás los datos del cultivo
+      nuevo a agregar*/}
+      {/**/}
       <Modal visible={cultivoformOpen} animationType="slide">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={globalStyles.modalContent}>
-            {/* <Text style={globalStyles.paragraph}>Hola me llamo Modal :-)</Text> */}
             <CultivoForm addCultivo={addCultivo} />
             <MaterialIcons
-              name="close"
-              size={24}
+              name="highlight-off"
+              size={48}
               style={{
                 ...globalStyles.modalToggle,
-                ...globalStyles.modalClose,
               }}
-              onPress={() => setCultivoformOpen(false)}
+              onPress={() => {
+                setCultivoformOpen(false);
+                Keyboard.dismiss();
+              }}
             />
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-
-      {/* El Modal de perfil se abre y ahí podés cerrar sesión */}
-      <Modal visible={profileOpen} animationType="slide">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={globalStyles.modalContent}>
-            {/* <Text style={globalStyles.paragraph}>Hola me llamo Modal :-)</Text> */}
-            <Perfil />
-            <View style={globalStyles.optionspart}>
-              <Button
-                title="Cerrar Sesión"
-                color="#097154"
-                onPress={() => {
-                  setProfileOpen(false);
-                  navigation.goBack();
-                }}
-              />
-            </View>
-            <MaterialIcons
-              name="close"
-              size={24}
-              style={{
-                ...globalStyles.modalToggle,
-                ...globalStyles.modalClose,
-              }}
-              onPress={() => setProfileOpen(false)}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
-      {/* El Modal de settings se abre y ahí modificás todas las cosas necesarias */}
-      <Modal visible={settingsOpen} animationType="slide">
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={globalStyles.modalContent}>
-            {/* <Text style={globalStyles.paragraph}>Hola me llamo Modal :-)</Text> */}
-            <Opciones />
-            <MaterialIcons
-              name="close"
-              size={24}
-              style={{
-                ...globalStyles.modalToggle,
-                ...globalStyles.modalClose,
-              }}
-              onPress={() => setSettingsOpen(false)}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
+      <View style={globalStyles.optionspart}>
+        {/* El toggle modal */}
+        <MaterialIcons
+          name="add-circle-outline"
+          size={48}
+          style={globalStyles.modalToggle}
+          onPress={() => setCultivoformOpen(true)}
+        />
+      </View>
       {/* Render de los cultivos actuales en la librería */}
       <FlatList
         data={cultivos}
@@ -138,38 +107,13 @@ export default function Home({ route, navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate("Cultivo", item)}
           >
-            <Text style={globalStyles.titleText}>{item.titulo}</Text>
+            <Card>
+              <Text style={globalStyles.titleText}>{item.titulo}</Text>
+              <Text style={globalStyles.paragraph}>{item.fecha}</Text>
+            </Card>
           </TouchableOpacity>
         )}
       />
-
-      <View style={globalStyles.optionspart}>
-        <MaterialIcons
-          name="account-circle"
-          size={24}
-          style={globalStyles.modalToggle}
-          onPress={() => {
-            //navigation.navigate("Mi Perfil");
-            setProfileOpen(true);
-          }}
-        />
-        {/* El toggle modal */}
-        <MaterialIcons
-          name="add"
-          size={24}
-          style={globalStyles.modalToggle}
-          onPress={() => setCultivoformOpen(true)}
-        />
-        <MaterialIcons
-          name="settings"
-          size={24}
-          style={globalStyles.modalToggle}
-          onPress={() => {
-            //navigation.navigate("Mi Perfil");
-            setSettingsOpen(true);
-          }}
-        />
-      </View>
     </View>
   );
 }

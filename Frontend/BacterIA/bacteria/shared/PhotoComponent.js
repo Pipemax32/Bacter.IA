@@ -39,12 +39,12 @@ class PhotoComponent extends Component {
         <Image
           resizeMode="contain"
           style={styles.containerSize}
-          source={require("../resources/background.png")}
+          source={require("../assets/background.png")}
         />
         <Image
           resizeMode="contain"
           style={styles.imageSize}
-          source={require("../resources/camera.png")}
+          source={require("../assets/camera.png")}
         />
       </View>
     );

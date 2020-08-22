@@ -6,17 +6,20 @@ import {
   Button,
   TextInput,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import Home from "./home";
 import { Formik } from "formik";
+import Card from "../shared/card";
 
 export default function LoginForm({ navigation }) {
   const [nombre, setNombre] = useState("");
 
   const changeNombre = (nuevoNombre) => {
     setNombre(() => {
+      console.log("ok");
       return [nuevoNombre];
     });
   };
@@ -27,39 +30,42 @@ export default function LoginForm({ navigation }) {
         <View style={globalStyles.container}>
           <Formik
             initialValues={{
-              dni: "",
+              id: "",
               contra: "",
             }}
-            onSubmit={({ dni, contra }, { resetForm }) => {
-              console.log(dni);
+            onSubmit={({ id, contra }, { resetForm }) => {
+              console.log(id);
               console.log(contra);
 
-              changeNombre(dni);
+              //changeNombre(id);
               resetForm();
-              navigation.navigate("Mis Cultivos", nombre);
+              navigation.navigate("AppTabs");
             }}
           >
             {(props) => (
               <View>
-                <TextInput
-                  style={globalStyles.input}
-                  placeholder="DNI"
-                  onChangeText={props.handleChange("dni")}
-                  value={props.values.dni}
-                  keyboardType="numeric"
-                />
-                <TextInput
-                  style={globalStyles.input}
-                  placeholder="Contraseña"
-                  secureTextEntry={true}
-                  onChangeText={props.handleChange("contra")}
-                  value={props.values.contra}
-                />
-                <Button
-                  title="Iniciar Sesión"
-                  color="#097154"
+                <Card>
+                  <TextInput
+                    style={globalStyles.input}
+                    placeholder="Correo electrónico"
+                    onChangeText={props.handleChange("id")}
+                    value={props.values.id}
+                    keyboardType="email-address"
+                  />
+                  <TextInput
+                    style={globalStyles.input}
+                    placeholder="Contraseña"
+                    secureTextEntry={true}
+                    onChangeText={props.handleChange("contra")}
+                    value={props.values.contra}
+                  />
+                </Card>
+                <TouchableOpacity
+                  style={globalStyles.button}
                   onPress={props.handleSubmit}
-                />
+                >
+                  <Text style={globalStyles.buttonText}>Iniciar Sesión</Text>
+                </TouchableOpacity>
               </View>
             )}
           </Formik>
