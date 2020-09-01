@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native";
 
+//this.state = {
+//_hred: "#cc0000",
+//};
+
 export const globalStyles = StyleSheet.create({
   titleText: {
     fontSize: 18,
@@ -11,7 +15,8 @@ export const globalStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#097154",
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
     textAlign: "center",
   },
   tabText: {
@@ -41,10 +46,27 @@ export const globalStyles = StyleSheet.create({
     //justifyContent: "center",
   },
   button: {
-    marginVertical: 20,
+    marginTop: 20,
     marginHorizontal: 22,
     padding: 10,
+
+    //backgroundColor: _hred,
     backgroundColor: "#3AB795",
+    alignItems: "center",
+    borderRadius: 100,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: "#007557",
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    //justifyContent: "center",
+  },
+  buttonAlt: {
+    marginTop: 20,
+    marginHorizontal: 22,
+    padding: 10,
+
+    //backgroundColor: _hred,
+    backgroundColor: "#fff",
     alignItems: "center",
     borderRadius: 100,
     shadowOffset: { width: 1, height: 1 },
@@ -57,6 +79,12 @@ export const globalStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
+  },
+  buttonTextAlt: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#3AB795",
+    color: "#b9b9bf",
   },
   scrollView: {
     padding: 10,
@@ -92,6 +120,13 @@ export const globalStyles = StyleSheet.create({
     alignSelf: "center",
     padding: 10,
   },
+  cultivoButtons: {
+    //marginHorizontal: 20,
+    //marginBottom: 10,
+    color: "#007557",
+    alignSelf: "center",
+    padding: 3,
+  },
   modalClose: {
     marginBottom: 10,
     borderWidth: 1,
@@ -108,7 +143,7 @@ export const globalStyles = StyleSheet.create({
     shadowColor: "#007557",
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    marginHorizontal: 4,
+    marginHorizontal: 2,
     marginVertical: 6,
   },
   cardContent: {
@@ -116,6 +151,7 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 20,
   },
   header: {
+    //backgroundColor: _hred,
     backgroundColor: "#3AB795",
     //alignItems: "center",
     //justifyContent: "center",

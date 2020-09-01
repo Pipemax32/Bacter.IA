@@ -17,12 +17,12 @@ import Card from "../shared/card";
 export default function LoginForm({ navigation }) {
   const [nombre, setNombre] = useState("");
 
-  const changeNombre = (nuevoNombre) => {
+  /*const changeNombre = (nuevoNombre) => {
     setNombre(() => {
       console.log("ok");
       return [nuevoNombre];
     });
-  };
+  };*/
 
   return (
     <View style={globalStyles.container}>
@@ -65,6 +65,15 @@ export default function LoginForm({ navigation }) {
                   onPress={props.handleSubmit}
                 >
                   <Text style={globalStyles.buttonText}>Iniciar Sesión</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={globalStyles.buttonAlt}
+                  onPress={props.handleSubmit}
+                >
+                  <Text style={globalStyles.buttonTextAlt}>
+                    Registrar Cuenta
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}

@@ -22,6 +22,7 @@ export default function CultivoForm({ addCultivo }) {
           colonias: "",
           /*agrupaciones: "", densidad: "", etiqueta: "", */
           notas: "",
+          imagena: "",
         }}
         onSubmit={(values) => {
           addCultivo(values);

@@ -51,10 +51,10 @@ class PhotoComponent extends Component {
   }
   renderImage() {
     return (
-      <View style={styles.container}>
+      <View style={{ height: 10, width: 200 }}>
         <Image
-          resizeMode="contain"
-          style={styles.chosenImage}
+          resizeMode="stretch"
+          style={{ height: 10, width: 200 }}
           source={{ uri: this.props.uri }}
         />
       </View>

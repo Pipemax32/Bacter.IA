@@ -19,28 +19,38 @@ import Opciones from "./opciones";
 import Card from "../shared/card";
 
 export default function Home({ route, navigation }) {
-  //const pressHandler = () => {
-  //navigation.navigate("Cultivo");
-  //navigation.push("Cultivo");
-  //};
-
   //const { nombre } = route.params;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [cultivoformOpen, setCultivoformOpen] = useState(false);
 
+  const handlerOfPress = () => {
+    //navigation.navigate("Cultivo");
+    console.log("I'm gofd");
+    //navigation.pop();
+  };
+
+  //borra a un campeonazo de la data
+  const deleteHim = (key) => {
+    console.log("arrivederci");
+    setCultivos((prevCultivos) => {
+      return prevCultivos.filter((cultivo) => cultivo.key != key);
+    });
+  };
+  //
   //kreeping track del key de cada bacteriplaca
   const [keyCount, setKeyCount] = useState(0);
   const keyCountUp = () => setKeyCount((prevKeyCount) => prevKeyCount + 1);
 
   const [cultivos, setCultivos] = useState([
-    //Acá se pasan los cultivos prehechos, probablemente se pueda hacer que no haya pero hay que averiguar :-PP
+    /*
     {
       titulo: "Bacterias 1",
       fecha: "1-2-2003",
       colonias: "23",
       notas: "lorem ipsum",
       key: "0.1",
+      uri de imagen or something: "djfksdjfhksdjfhk",
     },
     //La Key tiene que ser diferente entre todos los cultivos, averiguar forma de hacer que se agreguen siempre con Key nueva.
     {
@@ -56,7 +66,7 @@ export default function Home({ route, navigation }) {
       colonias: "23",
       notas: "lorem ipsum",
       key: "0.3",
-    },
+    },*/
   ]);
 
   const addCultivo = (cultivo) => {
@@ -98,6 +108,7 @@ export default function Home({ route, navigation }) {
           size={48}
           style={globalStyles.modalToggle}
           onPress={() => setCultivoformOpen(true)}
+          //onPress={handlerOfPress}
         />
       </View>
       {/* Render de los cultivos actuales en la librería */}
@@ -105,11 +116,66 @@ export default function Home({ route, navigation }) {
         data={cultivos}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Cultivo", item)}
+            onPress={() => navigation.navigate("Cultivo", item, handlerOfPress)}
           >
             <Card>
-              <Text style={globalStyles.titleText}>{item.titulo}</Text>
-              <Text style={globalStyles.paragraph}>{item.fecha}</Text>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                }}
+              >
+                <View>
+                  <Text style={globalStyles.titleText}>{item.titulo}</Text>
+                  <Text style={globalStyles.paragraph}>{item.fecha}</Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <View>
+                    <MaterialIcons
+                      name="create"
+                      size={23}
+                      style={globalStyles.cultivoButtons}
+                      //onPress={(item.key) => {console.log("I'm gofd");}}
+                      //onPress={deleteHim(item.key)}
+                      //onPress={handlerOfPress}
+                    />
+                    <MaterialIcons
+                      name="delete"
+                      size={23}
+                      style={globalStyles.cultivoButtons}
+                      onPress={(key) =>
+                        Alert.alert(
+                          "¿Eliminar cultivo?",
+                          "Una vez eliminado, no se puede recuperar",
+                          [
+                            {
+                              text: "Cancelar",
+                              style: "cancel",
+                              onPress: () => console.log("OK Pressed"),
+                            },
+                            {
+                              text: "Eliminar",
+                              onPress: () => {
+                                deleteHim(item.key);
+                              },
+                            },
+                          ],
+                          { cancelable: false }
+                        )
+                      }
+                      //onPress={(item.key) => {console.log("I'm gofd");}}
+                      //onPress={deleteHim(item.key)}
+                      //onPress={handlerOfPress}
+                    />
+                  </View>
+                </View>
+              </View>
             </Card>
           </TouchableOpacity>
         )}

@@ -1,49 +1,76 @@
-import React from "react";
-import { View, ScrollView, Text } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { globalStyles } from "../styles/global";
-//import PhotoMain from "../shared/photoMain";
+import PhotoMain from "../shared/photoMain";
 import Card from "../shared/card";
 
 export default function Cultivo({ route, navigation }) {
   //Acá hay que anotar todos los valores de los cultivos que se vayan a usar
-  const { titulo, fecha, colonias, notas, key } = route.params;
+  const { fecha, colonias, notas, key } = route.params;
+  const [titulo, setTitulo] = useState(route.params.titulo);
+  //fix this pls :)
+  const handlerOfPress = () => route.params.handlerOfPress;
+
+  //const [value, onChangeText] = React.useState("Useless Placeholder");
 
   return (
     //Esto es la plantilla para información de bacterias, que referencia los valores cargados arriba
     <View style={globalStyles.container}>
-      <View style={{ flex: 1 }}></View>
+      <TouchableWithoutFeedback
+        onPress={handlerOfPress} /*onPress={Keyboard.dismiss}*/
+      >
+        <View style={{ flex: 1 }}>{/*<PhotoMain />*/}</View>
+      </TouchableWithoutFeedback>
       <Card>
-        <Text style={globalStyles.titleMiddle}>{titulo}</Text>
+        <TextInput
+          maxLength={16}
+          style={globalStyles.titleMiddle}
+          //onChangeText={(text) => onChangeText(titulo)}
+          onChangeText={(val) => setTitulo(val)}
+          value={titulo}
+        />
+        {/*<Text style={globalStyles.titleMiddle}>{titulo}</Text>*/}
         <ScrollView style={globalStyles.scrollView}>
           <View style={{ flex: 1, flexDirection: "row" }}>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ flex: 2, flexDirection: "column" }}>
-                <Text style={globalStyles.paragraphTitle}>Fecha:</Text>
-                <Text style={globalStyles.paragraphTitle}>Colonias:</Text>
-                <Text style={globalStyles.paragraphTitle}>Agrupaciones:</Text>
-                <Text style={globalStyles.paragraphTitle}>Densidad:</Text>
-                <Text style={globalStyles.paragraphTitle}>Etiqueta:</Text>
-                <Text style={globalStyles.paragraphTitle}>Notas:</Text>
+            <View style={{ flex: 1 }}></View>
+            <View style={{ flex: 10, flexDirection: "column" }}>
+              <Text style={globalStyles.paragraphTitle}>Fecha:</Text>
+              <Text style={globalStyles.paragraphTitle}>Colonias:</Text>
+              <Text style={globalStyles.paragraphTitle}>Agrupaciones:</Text>
+              <Text style={globalStyles.paragraphTitle}>Densidad:</Text>
+              <Text style={globalStyles.paragraphTitle}>Etiqueta:</Text>
+              <Text style={globalStyles.paragraphTitle}>Notas:</Text>
 
-                <Text style={globalStyles.blankLine}> </Text>
-              </View>
+              <Text style={globalStyles.blankLine}> </Text>
             </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ flex: 3, flexDirection: "column" }}>
-                <Text style={globalStyles.paragraph}>{fecha}</Text>
-                <Text style={globalStyles.paragraph}>{colonias}</Text>
-                <Text style={globalStyles.paragraph}>Nunca</Text>
-                <Text style={globalStyles.paragraph}>12%</Text>
-                <Text style={globalStyles.paragraph}>No</Text>
-                <Text style={globalStyles.paragraph}>{notas}</Text>
 
-                <Text style={globalStyles.blankLine}> </Text>
-              </View>
+            <View
+              style={{
+                flex: 9,
+                flexDirection: "column",
+                //alignItems: "flex-end",
+              }}
+            >
+              <Text style={globalStyles.paragraph}>{fecha}</Text>
+              <Text style={globalStyles.paragraph}>{colonias}</Text>
+              <Text style={globalStyles.paragraph}>Nunca</Text>
+              <Text style={globalStyles.paragraph}>12%</Text>
+              <Text style={globalStyles.paragraph}>No</Text>
+              <Text style={globalStyles.paragraph}>{notas}</Text>
+
+              <Text style={globalStyles.blankLine}> </Text>
             </View>
+            <View style={{ flex: 1 }}></View>
           </View>
         </ScrollView>
       </Card>
-      {/*<PhotoMain/>*/}
     </View>
   );
 }
