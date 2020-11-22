@@ -5,11 +5,12 @@ import {
   Text,
   TextInput,
   Keyboard,
+  Image,
   TouchableWithoutFeedback,
 } from "react-native";
 import { globalStyles } from "../styles/global";
-import PhotoMain from "../shared/photoMain";
 import Card from "../shared/card";
+import PhotoComponent from "../shared/photoComponent";
 
 export default function Cultivo({ route, navigation }) {
   //Acá hay que anotar todos los valores de los cultivos que se vayan a usar
@@ -24,9 +25,15 @@ export default function Cultivo({ route, navigation }) {
     //Esto es la plantilla para información de bacterias, que referencia los valores cargados arriba
     <View style={globalStyles.container}>
       <TouchableWithoutFeedback
-        onPress={handlerOfPress} /*onPress={Keyboard.dismiss}*/
+        /*onPress={handlerOfPress}*/ onPress={Keyboard.dismiss}
       >
-        <View style={{ flex: 1 }}>{/*<PhotoMain />*/}</View>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <PhotoComponent />
+          {/*<Image
+            style={{ height: 250, width: 250 }}
+            source={require("../assets/TheAgar.jpg")}
+          />*/}
+        </View>
       </TouchableWithoutFeedback>
       <Card>
         <TextInput

@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
 
-//this.state = {
-//_hred: "#cc0000",
-//};
 
 export const globalStyles = StyleSheet.create({
   titleText: {

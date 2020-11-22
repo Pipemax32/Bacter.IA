@@ -1,70 +1,60 @@
-import React, { Component } from "react";
-import { Dimensions, Image, StyleSheet, View } from "react-native";
-const width = Dimensions.get("window").width;
-const largeContainerSize = width / 2;
-const largeImageSize = width / 4;
-const styles = StyleSheet.create({
-  container: {
-    flex: 3,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 10,
-  },
-  containerSize: {
-    width: largeContainerSize,
-    height: largeContainerSize,
-    alignItems: "center",
-    justifyContent: "center",
-    tintColor: "grey",
-  },
-  imageSize: {
-    width: largeImageSize,
-    height: largeImageSize,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-  },
-  chosenImage: {
-    width: width / 1.25,
-    height: width / 1.25,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-  },
-});
-class PhotoComponent extends Component {
-  renderDefault() {
-    return (
-      <View style={styles.container}>
-        <Image
-          resizeMode="contain"
-          style={styles.containerSize}
-          source={require("../assets/background.png")}
-        />
-        <Image
-          resizeMode="contain"
-          style={styles.imageSize}
-          source={require("../assets/camera.png")}
-        />
-      </View>
-    );
-  }
-  renderImage() {
-    return (
-      <View style={{ height: 10, width: 200 }}>
-        <Image
-          resizeMode="stretch"
-          style={{ height: 10, width: 200 }}
-          source={{ uri: this.props.uri }}
-        />
-      </View>
-    );
-  }
-  render() {
-    const displayImage = this.props.uri
-      ? this.renderImage()
-      : this.renderDefault();
-    return <View style={styles.container}>{displayImage}</View>;
-  }
+import React from 'react'
+import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import * as Permissions from 'expo-permissions'
+
+export default function App() {
+	const askForPermission = async () => {
+		const permissionResult = await Permissions.askAsync(Permissions.CAMERA)
+		if (permissionResult.status !== 'granted') {
+			Alert.alert('no permissions to access camera!', [{ text: 'ok' }])
+			return false
+		}
+		return true
+	}
+
+	takeImage = async () => {
+		// make sure that we have the permission
+		const hasPermission = await askForPermission()
+		if (!hasPermission) {
+			return
+		} else {
+			// launch the camera with the following settings
+			let image = await ImagePicker.launchCameraAsync({
+				mediaTypes: ImagePicker.MediaTypeOptions.Images,
+				allowsEditing: true,
+				aspect: [3, 3],
+				quality: 1,
+				base64: true,
+			})
+			// make sure a image was taken:
+			if (!image.cancelled) {
+				fetch('http://24.232.185.128:25565/bac', {
+					method: 'POST',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json',
+					},
+					// send our base64 string as POST request
+					body: JSON.stringify({
+						imgsource: image.base64,
+					}),
+				})
+			}
+		}
+	}
+	return (
+		<View style={styles.container}>
+			<Button title="Take a photo" onPress={takeImage} />
+		</View>
+	)
 }
-export default PhotoComponent;
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+})

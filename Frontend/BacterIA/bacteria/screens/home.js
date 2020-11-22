@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -17,12 +17,15 @@ import CultivoForm from "./cultivoForm";
 import Perfil from "./perfil";
 import Opciones from "./opciones";
 import Card from "../shared/card";
+import { dataContext } from "./provider/dataProvider";
 
 export default function Home({ route, navigation }) {
   //const { nombre } = route.params;
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
+  //const [settingsOpen, setSettingsOpen] = useState(false);
+  //const [profileOpen, setProfileOpen] = useState(false);
   const [cultivoformOpen, setCultivoformOpen] = useState(false);
+
+  const data = useContext(dataContext);
 
   const handlerOfPress = () => {
     //navigation.navigate("Cultivo");
@@ -38,6 +41,9 @@ export default function Home({ route, navigation }) {
     });
   };
   //
+
+
+
   //kreeping track del key de cada bacteriplaca
   const [keyCount, setKeyCount] = useState(0);
   const keyCountUp = () => setKeyCount((prevKeyCount) => prevKeyCount + 1);
@@ -69,6 +75,13 @@ export default function Home({ route, navigation }) {
     },*/
   ]);
 
+  const updateCultivos = (cultivosActualizados) => {
+    setCultivos({
+      return: cultivosActualizados
+    });
+    setCultivoformOpen(false);
+  };
+
   const addCultivo = (cultivo) => {
     keyCountUp();
     cultivo.key = keyCount.toString(); //Math.random().toString(); jaja antes era rancio
@@ -80,13 +93,14 @@ export default function Home({ route, navigation }) {
 
   return (
     <View style={globalStyles.container}>
+      <Text style={globalStyles.titleMiddle}>{data.userID}</Text>
       {/* El Modal de creación se abre y ahí cargás los datos del cultivo
       nuevo a agregar*/}
       {/**/}
       <Modal visible={cultivoformOpen} animationType="slide">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={globalStyles.modalContent}>
-            <CultivoForm addCultivo={addCultivo} />
+            <CultivoForm addCultivo={addCultivo} updateCultivos={updateCultivos} />
             <MaterialIcons
               name="highlight-off"
               size={48}
@@ -108,7 +122,7 @@ export default function Home({ route, navigation }) {
           size={48}
           style={globalStyles.modalToggle}
           onPress={() => setCultivoformOpen(true)}
-          //onPress={handlerOfPress}
+        //onPress={handlerOfPress}
         />
       </View>
       {/* Render de los cultivos actuales en la librería */}
@@ -141,9 +155,9 @@ export default function Home({ route, navigation }) {
                       name="create"
                       size={23}
                       style={globalStyles.cultivoButtons}
-                      //onPress={(item.key) => {console.log("I'm gofd");}}
-                      //onPress={deleteHim(item.key)}
-                      //onPress={handlerOfPress}
+                    //onPress={(item.key) => {console.log("I'm gofd");}}
+                    //onPress={deleteHim(item.key)}
+                    //onPress={handlerOfPress}
                     />
                     <MaterialIcons
                       name="delete"
@@ -169,9 +183,9 @@ export default function Home({ route, navigation }) {
                           { cancelable: false }
                         )
                       }
-                      //onPress={(item.key) => {console.log("I'm gofd");}}
-                      //onPress={deleteHim(item.key)}
-                      //onPress={handlerOfPress}
+                    //onPress={(item.key) => {console.log("I'm gofd");}}
+                    //onPress={deleteHim(item.key)}
+                    //onPress={handlerOfPress}
                     />
                   </View>
                 </View>

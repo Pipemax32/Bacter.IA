@@ -10,6 +10,7 @@ import Cultivo from "../screens/cultivo";
 import Perfil from "../screens/perfil";
 import LoginForm from "../screens/loginForm";
 import Opciones from "../screens/opciones";
+import { DataProvider } from "../screens/provider/dataProvider";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,9 +63,9 @@ const AppStack = () => {
         options={({ route }) => ({
           title: "Detalles de " + route.params.titulo,
         })}
-        //options={{
-        //  title: "Detalles de Cultivo",
-        //}}
+      //options={{
+      //  title: "Detalles de Cultivo",
+      //}}
       />
     </Stack.Navigator>
   );
@@ -81,18 +82,18 @@ const AppTabs = () => {
         inactiveBackgroundColor: "#3AB795",
         showLabel: false,
       }}
-      //Settings default para las pantallas
-      /*screenOptions={{
-      headerStyle: {
-        backgroundColor: "#3AB795",
-        height: 60,
-      },
+    //Settings default para las pantallas
+    /*screenOptions={{
+    headerStyle: {
+      backgroundColor: "#3AB795",
+      height: 60,
+    },
 
-      headerTintColor: "#fEFefE",
-      headerTitleStyle: {
-        fontWeight: "bold",
-      },
-    }}*/
+    headerTintColor: "#fEFefE",
+    headerTitleStyle: {
+      fontWeight: "bold",
+    },
+  }}*/
     >
       {/* Esto abajo ya son las screens en sí ;-o */}
       <Tab.Screen
@@ -131,7 +132,9 @@ const AppTabs = () => {
 };
 
 export const AppNavigator = () => (
-  <NavigationContainer>
-    <AppStack />
-  </NavigationContainer>
+  <DataProvider>
+    <NavigationContainer>
+      <AppStack />
+    </NavigationContainer>
+  </DataProvider>
 );

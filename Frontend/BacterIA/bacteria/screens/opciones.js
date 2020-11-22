@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Switch, TouchableOpacity } from "react-native";
 import { globalStyles } from "../styles/global";
 import Card from "../shared/card";
 
@@ -7,9 +7,10 @@ import Card from "../shared/card";
 
 export default function Opciones() {
   //image
-
-  {
-    /*state = {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  //{
+  /*state = {
     pickedImage: null,
   };
 
@@ -35,7 +36,7 @@ export default function Opciones() {
       }
     );
   };*/
-  }
+  // }
 
   //<Image source={this.state.pickedImage} />
   //<TouchableOpacity onPress={this.pickImageHandler}></TouchableOpacity>
@@ -46,7 +47,27 @@ export default function Opciones() {
   return (
     <View style={globalStyles.container}>
       <Card>
-        <Text>Mis Opciones</Text>
+        <View style={{ alignItems: "center" }}>
+          <Text style={globalStyles.titleMiddle}>Configuración</Text>
+          <View style={{ height: 20 }}></View>
+          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <View style={{ flex: 9 }}>
+              <Text style={globalStyles.paragraphTitle}>Opción 1</Text>
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <Switch
+                trackColor={{ false: "#767577", true: "#3AB795" }}
+                thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+            </View>
+
+            <View style={{ flex: 1 }}></View>
+          </View>
+        </View>
       </Card>
     </View>
   );

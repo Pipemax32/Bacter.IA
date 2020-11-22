@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -12,7 +12,20 @@ import { Formik } from "formik";
 import Card from "../shared/card";
 import { set } from "react-native-reanimated";
 
-export default function CultivoForm({ addCultivo }) {
+export default function CultivoForm({ addCultivo, updateCultivos }) {
+
+  const [newlist, setNewlist] = useState([  ]);
+
+  fetcher= async () => {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+    .then(response => response.json())
+    .then(json => {
+      setNewlist({
+        return: json
+      });
+    })
+  };
+
   return (
     <View style={globalStyles.container}>
       <Formik
@@ -26,6 +39,8 @@ export default function CultivoForm({ addCultivo }) {
         }}
         onSubmit={(values) => {
           addCultivo(values);
+          fetcher("wow");
+          updateCultivos(newlist);
           console.log(values);
           Keyboard.dismiss;
         }}
