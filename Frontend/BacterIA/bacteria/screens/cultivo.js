@@ -14,10 +14,8 @@ import PhotoComponent from "../shared/photoComponent";
 
 export default function Cultivo({ route, navigation }) {
   //Acá hay que anotar todos los valores de los cultivos que se vayan a usar
-  const { fecha, colonias, notas, key } = route.params;
+  const { fecha, colonias, notas, key, densidad, cantidad, imgEdit, imgNoEdit, } = route.params;
   const [titulo, setTitulo] = useState(route.params.titulo);
-  //fix this pls :)
-  const handlerOfPress = () => route.params.handlerOfPress;
 
   //const [value, onChangeText] = React.useState("Useless Placeholder");
 
@@ -28,7 +26,7 @@ export default function Cultivo({ route, navigation }) {
         /*onPress={handlerOfPress}*/ onPress={Keyboard.dismiss}
       >
         <View style={{ flex: 1, alignItems: "center" }}>
-          <PhotoComponent />
+          <Image style={{ height: 100, width: 100 }} source={{ uri: `data:image/gif;base64,${imgEdit}` }} />
           {/*<Image
             style={{ height: 250, width: 250 }}
             source={require("../assets/TheAgar.jpg")}
@@ -66,9 +64,9 @@ export default function Cultivo({ route, navigation }) {
               }}
             >
               <Text style={globalStyles.paragraph}>{fecha}</Text>
-              <Text style={globalStyles.paragraph}>{colonias}</Text>
+              <Text style={globalStyles.paragraph}>{cantidad}</Text>
               <Text style={globalStyles.paragraph}>Nunca</Text>
-              <Text style={globalStyles.paragraph}>12%</Text>
+              <Text style={globalStyles.paragraph}>{densidad}%</Text>
               <Text style={globalStyles.paragraph}>No</Text>
               <Text style={globalStyles.paragraph}>{notas}</Text>
 

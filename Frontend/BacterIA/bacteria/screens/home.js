@@ -23,6 +23,7 @@ export default function Home({ route, navigation }) {
   //const { nombre } = route.params;
   //const [settingsOpen, setSettingsOpen] = useState(false);
   //const [profileOpen, setProfileOpen] = useState(false);
+
   const [cultivoformOpen, setCultivoformOpen] = useState(false);
 
   const data = useContext(dataContext);
@@ -34,46 +35,15 @@ export default function Home({ route, navigation }) {
   };
 
   //borra a un campeonazo de la data
-  const deleteHim = (key) => {
-    console.log("arrivederci");
-    setCultivos((prevCultivos) => {
-      return prevCultivos.filter((cultivo) => cultivo.key != key);
-    });
-  };
+
   //
 
 
 
   //kreeping track del key de cada bacteriplaca
-  const [keyCount, setKeyCount] = useState(0);
-  const keyCountUp = () => setKeyCount((prevKeyCount) => prevKeyCount + 1);
 
-  const [cultivos, setCultivos] = useState([
-    /*
-    {
-      titulo: "Bacterias 1",
-      fecha: "1-2-2003",
-      colonias: "23",
-      notas: "lorem ipsum",
-      key: "0.1",
-      uri de imagen or something: "djfksdjfhksdjfhk",
-    },
-    //La Key tiene que ser diferente entre todos los cultivos, averiguar forma de hacer que se agreguen siempre con Key nueva.
-    {
-      titulo: "Bacterias 2",
-      fecha: "1-2-2003",
-      colonias: "99",
-      notas: "lorem ipsum",
-      key: "0.2",
-    },
-    {
-      titulo: "Bacterias 3",
-      fecha: "1-2-2003",
-      colonias: "23",
-      notas: "lorem ipsum",
-      key: "0.3",
-    },*/
-  ]);
+
+
 
   const updateCultivos = (cultivosActualizados) => {
     setCultivos({
@@ -82,14 +52,7 @@ export default function Home({ route, navigation }) {
     setCultivoformOpen(false);
   };
 
-  const addCultivo = (cultivo) => {
-    keyCountUp();
-    cultivo.key = keyCount.toString(); //Math.random().toString(); jaja antes era rancio
-    setCultivos((cultivosActuales) => {
-      return [cultivo, ...cultivosActuales];
-    });
-    setCultivoformOpen(false);
-  };
+
 
   return (
     <View style={globalStyles.container}>
@@ -100,7 +63,7 @@ export default function Home({ route, navigation }) {
       <Modal visible={cultivoformOpen} animationType="slide">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={globalStyles.modalContent}>
-            <CultivoForm addCultivo={addCultivo} updateCultivos={updateCultivos} />
+            <CultivoForm updateCultivos={updateCultivos} setCultivoformOpen={setCultivoformOpen} />
             <MaterialIcons
               name="highlight-off"
               size={48}
@@ -127,7 +90,7 @@ export default function Home({ route, navigation }) {
       </View>
       {/* Render de los cultivos actuales en la librería */}
       <FlatList
-        data={cultivos}
+        data={data.cultivos}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("Cultivo", item, handlerOfPress)}
@@ -176,7 +139,7 @@ export default function Home({ route, navigation }) {
                             {
                               text: "Eliminar",
                               onPress: () => {
-                                deleteHim(item.key);
+                                data.deleteHim(item.key);
                               },
                             },
                           ],

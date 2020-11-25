@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -11,36 +11,32 @@ import { globalStyles } from "../styles/global";
 import { Formik } from "formik";
 import Card from "../shared/card";
 import { set } from "react-native-reanimated";
+import { dataContext } from "./provider/dataProvider";
+import PhotoComponent from "../shared/photoComponent";
 
-export default function CultivoForm({ addCultivo, updateCultivos }) {
+export default function CultivoForm({ updateCultivos, setCultivoformOpen }) {
 
-  const [newlist, setNewlist] = useState([  ]);
+  const data = useContext(dataContext);
 
-  fetcher= async () => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-    .then(response => response.json())
-    .then(json => {
-      setNewlist({
-        return: json
-      });
-    })
-  };
 
   return (
+
     <View style={globalStyles.container}>
+      <PhotoComponent />
+      {/* 
       <Formik
         initialValues={{
           titulo: "",
           fecha: "",
           colonias: "",
-          /*agrupaciones: "", densidad: "", etiqueta: "", */
+          
           notas: "",
           imagena: "",
         }}
         onSubmit={(values) => {
-          addCultivo(values);
-          fetcher("wow");
-          updateCultivos(newlist);
+          data.addCultivo(values);
+          setCultivoformOpen(false);
+          //updateCultivos(newlist);
           console.log(values);
           Keyboard.dismiss;
         }}
@@ -106,6 +102,7 @@ export default function CultivoForm({ addCultivo, updateCultivos }) {
           </View>
         )}
       </Formik>
+      */}
     </View>
   );
 }
