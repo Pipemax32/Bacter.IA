@@ -22,7 +22,7 @@ export default function CultivoForm({ updateCultivos, setCultivoformOpen }) {
   return (
 
     <View style={globalStyles.container}>
-      <PhotoComponent />
+      <PhotoComponent setCultivoformOpen={setCultivoformOpen} />
       {/* 
       <Formik
         initialValues={{

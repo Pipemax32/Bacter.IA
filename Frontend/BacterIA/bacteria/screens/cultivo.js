@@ -26,7 +26,7 @@ export default function Cultivo({ route, navigation }) {
         /*onPress={handlerOfPress}*/ onPress={Keyboard.dismiss}
       >
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Image style={{ height: 100, width: 100 }} source={{ uri: `data:image/gif;base64,${imgEdit}` }} />
+          <Image style={{ height: 200, width: 200 }} source={{ uri: `data:image/gif;base64,${imgEdit}` }} />
           {/*<Image
             style={{ height: 250, width: 250 }}
             source={require("../assets/TheAgar.jpg")}

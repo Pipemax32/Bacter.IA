@@ -6,6 +6,10 @@ const DataProvider = (props) => {
 
   const [userID, setUserID] = useState("2");
   const [nombre, setNombre] = useState("");
+
+
+  const [nuevoCultivo, setNuevoCultivo] = useState([])
+
   const [cultivos, setCultivos] = useState([
     /*
     {
@@ -80,6 +84,9 @@ const DataProvider = (props) => {
         setCultivos,
         addCultivo,
         deleteHim,
+
+        nuevoCultivo,
+        setNuevoCultivo,
 
         keyCount,
         setKeyCount,
