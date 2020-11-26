@@ -8,8 +8,6 @@ const DataProvider = (props) => {
   const [nombre, setNombre] = useState("");
 
 
-  const [nuevoCultivo, setNuevoCultivo] = useState([])
-
   const [cultivos, setCultivos] = useState([
     /*
     {
@@ -80,13 +78,11 @@ const DataProvider = (props) => {
         nombre,
         setNombre,
 
+
         cultivos,
         setCultivos,
         addCultivo,
         deleteHim,
-
-        nuevoCultivo,
-        setNuevoCultivo,
 
         keyCount,
         setKeyCount,

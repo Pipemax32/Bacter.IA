@@ -56,7 +56,6 @@ export default function Home({ route, navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.titleMiddle}>{data.userID}</Text>
       {/* El Modal de creación se abre y ahí cargás los datos del cultivo
       nuevo a agregar*/}
       {/**/}

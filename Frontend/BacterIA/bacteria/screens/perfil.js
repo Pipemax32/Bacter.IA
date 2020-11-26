@@ -57,14 +57,6 @@ export default function Perfil({ navigation }) {
       >
         <Text style={globalStyles.buttonText}>Cerrar Sesión</Text>
       </TouchableOpacity>
-      <Text style={globalStyles.titleMiddle}>{data.userID}</Text>
-      <TextInput
-        maxLength={16}
-        style={globalStyles.input}
-        placeholder="2"
-        onChangeText={text => data.setUserID(text)}
-        value={data.userID}
-      />
     </View>
   );
 }

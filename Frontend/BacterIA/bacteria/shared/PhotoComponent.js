@@ -11,8 +11,10 @@ import { dataContext } from "../screens/provider/dataProvider";
 export default function PhotoComponent({ setCultivoformOpen }) {
 
 
-	const [name, setName] = useState("booom")
-	const [notes, setNotes] = useState("booom")
+	//const [nuevoCultivo, setNuevoCultivo] = useState([])
+
+	const [name, setName] = useState("")
+	const [notes, setNotes] = useState("")
 	const [dens, setDens] = useState(0)
 	const [colCount, setColCount] = useState(0)
 	const [cimgNoEdit, setCimgNoEdit] = useState("")
@@ -23,23 +25,9 @@ export default function PhotoComponent({ setCultivoformOpen }) {
 	const data = useContext(dataContext);
 
 
-	const submit = () => {
-		data.setNuevoCultivo({
-			cantidad: colCount,
-			fecha: "27-11-2020",
-			titulo: name,
-			notas: notes,
-			densidad: dens,
-			imgEdit: cimgEdit,
-			imgNoEdit: cimgNoEdit
-		})
+	//const submit = () => {
 
-		console.log(data.nuevoCultivo.notas)
-		data.addCultivo(data.nuevoCultivo)
-		setCultivoformOpen(false)
-
-		Keyboard.dismiss;
-	};
+	//};
 
 
 	const askForPermission = async () => {
@@ -96,24 +84,113 @@ export default function PhotoComponent({ setCultivoformOpen }) {
 
 	return (
 
-		<View style={globalStyles.container}>
-			{photoUp == false ? <MaterialIcons
-				name="camera-alt"
-				size={48}
-				style={{
-					...globalStyles.modalToggle,
+		<View style={globalStyles.container}>{photoUp == false ?
+			<View style={{ height: 150 }}></View> : null}
+			{photoUp == false ?
+				<Text style={globalStyles.titleMiddle}>Seleccioná la foto de tu cultivo desde tu Galería</Text> : null}
+			{photoUp == false ?
+				<View style={{ height: 25 }}></View> : null}
+			{photoUp == false ?
+				<MaterialIcons
+					name="camera-alt"
+					size={48}
+					style={{
+						...globalStyles.modalToggle,
+					}}
+					onPress={takeImage} /> : null}
+
+
+			{photoUp == true ? <Formik
+				initialValues={{
+					titulo2: "",
+					notas2: "",
 				}}
-				onPress={takeImage} /> : null}
-
-			<Image style={{ height: 200, width: 200 }} source={{ uri: `data:image/gif;base64,${cimgEdit}` }} />
+				onSubmit={() => {
 
 
+					data.addCultivo(nuevoCultivo)
+					setCultivoformOpen(false)
+
+					Keyboard.dismiss;
+				}}
+			>
+				{(props) => (
+					<View>
+						<Card>
+							<TextInput
+								maxLength={25}
+								style={globalStyles.input}
+								placeholder="Título"
+								onChangeText={props.handleChange("titulo2")}
+								value={props.values.titulo2}
+							/>
+							<TextInput
+								multiline
+								textAlignVertical="top"
+								maxLength={120}
+								maxHeight={120}
+								style={globalStyles.input}
+								placeholder="Notas"
+								onChangeText={props.handleChange("notas2")}
+								value={props.values.notas2}
+							/>
+
+							<View style={{ height: 20 }}>
+
+							</View>
+							<View style={{ alignItems: "center" }}>
+								<Image style={{ height: 200, width: 200 }} source={{ uri: `data:image/gif;base64,${cimgEdit}` }} />
+							</View>
+						</Card>
+
+						<TouchableOpacity
+							style={globalStyles.button}
+							onPress={() => {
 
 
-			{photoUp == true ? <View>
+
+								//setProfileOpen(false);
+								if (props.values.titulo2 == "" || props.values.titulo2 == " ") {
+									props.values.titulo2 = "Sin nombre";
+								}
+								if (props.values.notas2 == "" || props.values.notas2 == " ") {
+									props.values.notas2 = "Sin comentarios";
+								}
+
+
+								console.log("Hola mi valor es " + notes)
+								console.log("Hola mi valor es " + name)
+								//setNotes(props.values.notas2.value);
+
+
+								console.log("colCount" + { colCount })
+
+								data.addCultivo({
+									cantidad: colCount,
+									fecha: "26-11-2020",
+									titulo: props.values.titulo2,
+									notas: props.values.notas2,
+									densidad: dens,
+									imgEdit: cimgEdit,
+									imgNoEdit: cimgNoEdit
+								})
+
+								setCultivoformOpen(false)
+
+								Keyboard.dismiss;
+								//submit()
+							}}>
+							<Text style={globalStyles.buttonText}>Nuevo Cultivo</Text>
+						</TouchableOpacity>
+
+					</View>
+				)}
+			</Formik> : null}
+
+			{/*photoUp == true ? <View>
 				<Card>
 					<TextInput
-						maxLength={16}
+						maxLength={25}
 						style={globalStyles.input}
 						onChangeText={text => setName(text)}
 						value={name}
@@ -122,35 +199,22 @@ export default function PhotoComponent({ setCultivoformOpen }) {
 						multiline
 						textAlignVertical="top"
 						maxLength={120}
-						maxHeight={120}
+						maxHeight={100}
 						style={globalStyles.input}
 						onChangeText={text => setNotes(text)}
 						value={notes}
 					/>
+					<View style={{ height: 20 }}>
+
+					</View>
+					<View style={{ alignItems: "center" }}>
+						<Image style={{ height: 200, width: 200 }} source={{ uri: `data:image/gif;base64,${cimgEdit}` }} />
+					</View>
 				</Card>
-				<TouchableOpacity
-					style={globalStyles.button}
-					onPress={() => {
-
-						//setProfileOpen(false);
-						if (name == "") {
-							setName("Sin nombre")
-						}
-						if (notes == "") {
-							setNotes(" ")
-						}
-
-						console.log("Hola mi valor es " + notes)
-						console.log("Hola mi valor es " + name)
-						//setNotes(props.values.notas2.value);
 
 
 
-						submit()
-					}}>
-					<Text style={globalStyles.buttonText}>Nuevo Cultivo</Text>
-				</TouchableOpacity>
-			</View> : null}
+			</View> : null*/}
 
 
 
@@ -190,10 +254,12 @@ export default function PhotoComponent({ setCultivoformOpen }) {
 							/>
 						</Card>
 						<TouchableOpacity
-							style={globalStyles.button}
-							onPress={() => {
+					style={globalStyles.button}
+					onPress={() => {
 
-								//setProfileOpen(false);
+
+
+						//setProfileOpen(false);
 								if (props.values.titulo2 == "") {
 									props.values.titulo2 = "Sin nombre";
 								}
@@ -201,29 +267,35 @@ export default function PhotoComponent({ setCultivoformOpen }) {
 									props.values.notas2 = " ";
 								}
 
+						console.log("Hola mi valor es " + notes)
+						console.log("Hola mi valor es " + name)
+						//setNotes(props.values.notas2.value);
 
-								setName(props.values.titulo2);
-								setNotes("gayass");
 
-								console.log(props.values.titulo2);
-								console.log("Hola mi valor es " + notes);
-								console.log("Hola mi valor es " + name);
-								//setNotes(props.values.notas2.value);
+						console.log("colCount" + { colCount })
 
-								setNuevoCultivo({
-									cantidad: colCount,
-									fecha: "27-11-2020",
-									titulo: name,
-									notas: notes,
-									densidad: dens,
-									imgEdit: cimgEdit,
-									imgNoEdit: cimgNoEdit
-								});
 
-								props.handleSubmit();
-							}}>
-							<Text style={globalStyles.buttonText}>Nuevo Cultivo</Text>
-						</TouchableOpacity>
+
+
+
+						data.addCultivo({
+							cantidad: colCount,
+							fecha: "26-11-2020",
+							titulo: name,
+							notas: notes,
+							densidad: dens,
+							imgEdit: cimgEdit,
+							imgNoEdit: cimgNoEdit
+						})
+
+						setCultivoformOpen(false)
+
+						Keyboard.dismiss;
+						//submit()
+					}}>
+					<Text style={globalStyles.buttonText}>Nuevo Cultivo</Text>
+				</TouchableOpacity>
+						
 					</View>
 				)}
 			</Formik> : null*/}

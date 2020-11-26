@@ -17,30 +17,28 @@ export default function Cultivo({ route, navigation }) {
   const { fecha, colonias, notas, key, densidad, cantidad, imgEdit, imgNoEdit, } = route.params;
   const [titulo, setTitulo] = useState(route.params.titulo);
 
+  const [noEdit, setNoEdit] = useState(false)
+
   //const [value, onChangeText] = React.useState("Useless Placeholder");
+
 
   return (
     //Esto es la plantilla para información de bacterias, que referencia los valores cargados arriba
     <View style={globalStyles.container}>
       <TouchableWithoutFeedback
-        /*onPress={handlerOfPress}*/ onPress={Keyboard.dismiss}
+        /*onPress={handlerOfPress}*/
+        onPress={() => {
+          setNoEdit(noEdit == true ? false : true)
+        }}
       >
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Image style={{ height: 200, width: 200 }} source={{ uri: `data:image/gif;base64,${imgEdit}` }} />
-          {/*<Image
-            style={{ height: 250, width: 250 }}
-            source={require("../assets/TheAgar.jpg")}
-          />*/}
+
+          {noEdit == false ? <Image style={{ height: 250, width: 250 }} source={{ uri: `data:image/gif;base64,${imgEdit}` }} />
+            : <Image style={{ height: 250, width: 250 }} source={{ uri: `data:image/gif;base64,${imgNoEdit}` }} />}
         </View>
       </TouchableWithoutFeedback>
       <Card>
-        <TextInput
-          maxLength={16}
-          style={globalStyles.titleMiddle}
-          //onChangeText={(text) => onChangeText(titulo)}
-          onChangeText={(val) => setTitulo(val)}
-          value={titulo}
-        />
+        <Text style={globalStyles.titleMiddle}>{titulo}</Text>
         {/*<Text style={globalStyles.titleMiddle}>{titulo}</Text>*/}
         <ScrollView style={globalStyles.scrollView}>
           <View style={{ flex: 1, flexDirection: "row" }}>
@@ -65,7 +63,7 @@ export default function Cultivo({ route, navigation }) {
             >
               <Text style={globalStyles.paragraph}>{fecha}</Text>
               <Text style={globalStyles.paragraph}>{cantidad}</Text>
-              <Text style={globalStyles.paragraph}>Nunca</Text>
+              <Text style={globalStyles.paragraph}>No</Text>
               <Text style={globalStyles.paragraph}>{densidad}%</Text>
               <Text style={globalStyles.paragraph}>No</Text>
               <Text style={globalStyles.paragraph}>{notas}</Text>
